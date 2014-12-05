@@ -1,0 +1,12 @@
+---
+- name: create vhost config files
+  template: src=http-base.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf
+  with_items: enabled_vhosts
+  notify:
+  - restart apache
+
+- name: enable vhosts
+  command: a2ensite {{ item.server_name }}.conf
+  with_items: enabled_vhosts
+  notify:
+  - restart apache

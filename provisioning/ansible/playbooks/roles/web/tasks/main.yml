@@ -1,3 +1,4 @@
 ---
  - include: install-apache.yml
+ - include: manage-vhosts.yml
  - include: install-php.yml
