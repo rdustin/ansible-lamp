@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/trusty32"
 
     # set the ip of the server
-    config.vm.box = "private_network", ip: "192.168.30.117"
+    config.vm.network "private_network", ip: "192.168.30.117"
 
     # if you want any local folders to be synced besides the default
     #config.vm.synced_folder "www", "/var/www/sites"
