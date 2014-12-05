@@ -23,7 +23,7 @@ name you chose when you cloned the repository from GitHub. These files will
 be editable by you on your local machine with the changes showing up immediately
 on the server.
 
-__Step 2: Define your virtual host definitions__
+__Step 2: Define your virtual hosts__
 In your editor open the webservers variable file located at
 {project-folder-name}/provisioning/playbooks/group_vars/webservers.
 You will see a variable called enabled_vhosts with two definitions for
@@ -45,3 +45,12 @@ a Windows machine as my local computer I would need to open my
 
 Alternatively, you can install the Vagrant [https://github.com/cogitatio/vagrant-hostsupdater (Hostupdater plugin)]
 and configure your virtual host definitions in the Vagrantfile.
+
+If you want to __disable a virtual host__ you defined before you can do so by adding
+the definitions to the same webservers variable file were we define our active virtual
+hosts. It will look like:
+```
+disabled_vhosts:
+ - { server_name: 'sample-site2.dev'}
+```
+*the provisioning will fail if the site has not been defined*
