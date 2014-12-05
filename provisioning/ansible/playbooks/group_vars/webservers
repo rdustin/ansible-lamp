@@ -3,7 +3,6 @@ enabled_vhosts:
  - { server_name: 'sample-site2.dev', document_root: '/var/www/html/sample-site2' }
 
 disabled_vhosts:
- - { server_name: ''}
 
 enabled_modules:
  - rewrite
