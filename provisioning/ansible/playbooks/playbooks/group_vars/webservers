@@ -1,2 +1,0 @@
-enabled_vhosts:
- - { server_name: 'example.dev', document_root: '/var/www/sites/example' }
