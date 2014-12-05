@@ -1,0 +1,6 @@
+mysqlservice: mysql
+mysql_port: 3306
+dbuser: sampleuser
+upassword: sampleuserpwd
+dbname: sampledbname
+mysql_root_password: root

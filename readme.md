@@ -68,3 +68,6 @@ enabled_modules:
 disabled_modules:
 - rewrite
 ```
+
+## Mysql
+*creating tables and users*
