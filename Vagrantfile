@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "private_network", ip: "192.168.30.117"
 
     # if you want any local folders to be synced besides the default
-    #config.vm.synced_folder "www", "/var/www/sites"
+    config.vm.synced_folder "www/sites", "/var/www/html"
 
     # adjust the amount of memory the server has access to
     #config.vm.provider "virtualbox" do |vb|

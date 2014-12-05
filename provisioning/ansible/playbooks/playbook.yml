@@ -6,12 +6,12 @@
   roles:
     - common
 
-# - name: configure webserver
-#   hosts: webservers
-#   remote_user: root
+- name: configure webserver
+  hosts: webservers
+  remote_user: root
 
-#   roles:
-#     - web
+  roles:
+    - web
 
 # - name: configure dbserver
 #   hosts: dbservers
