@@ -4,3 +4,8 @@ enabled_vhosts:
 
 disabled_vhosts:
  - { server_name: ''}
+
+enabled_modules:
+ - rewrite
+
+disabled_modules:

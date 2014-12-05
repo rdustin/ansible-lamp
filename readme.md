@@ -46,6 +46,7 @@ a Windows machine as my local computer I would need to open my
 Alternatively, you can install the Vagrant [https://github.com/cogitatio/vagrant-hostsupdater (Hostupdater plugin)]
 and configure your virtual host definitions in the Vagrantfile.
 
+*Disable a virtual host*
 If you want to __disable a virtual host__ you defined before you can do so by adding
 the definitions to the same webservers variable file were we define our active virtual
 hosts. It will look like:
@@ -53,4 +54,17 @@ hosts. It will look like:
 disabled_vhosts:
  - { server_name: 'sample-site2.dev'}
 ```
-*the provisioning will fail if the site has not been defined*
+__NOTE:__ The provisioning will fail if the site has not been defined
+
+*Enabling and disabling Apache modules*
+Similarly to enabling virtual hosts above, you may define any apache modules you
+like to have enabled or disabled by putting them in the webservers variable file
+located at {project-folder-name}/provisioning/playbooks/group_vars/webservers.
+For example we could enable mod rewrite and disable it by using the following definition:
+```
+enabled_modules:
+ - rewrite
+
+disabled_modules:
+- rewrite
+```
