@@ -13,9 +13,9 @@
   roles:
     - web
 
-# - name: configure dbserver
-#   hosts: dbservers
-#   remote_user: root
+- name: configure dbserver
+  hosts: dbservers
+  remote_user: root
 
-#   roles:
-#     - db
+  roles:
+    - db

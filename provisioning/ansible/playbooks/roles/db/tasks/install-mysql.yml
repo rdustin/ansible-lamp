@@ -5,34 +5,41 @@
    - mysql-server
    - python-mysqldb
 
-- name: create mysql config file
-  template: src=my.cnf.j2 dest=/etc/my.cnf
-  notify:
-  - restart mysql
-
-  # Ansible mysql_secure_installation playbook from: http://injustfiveminutes.com/2014/08/25/ansible-mysql_secure_installation-playbook/
-
-- name: delete anonymous MySQL server user for {{ ansible_hostname }}
-  action: mysql_user user="" host="{{ ansible_hostname }}" state=absent
-
-- name: delete anonymous MySQL server user for localhost
-  action: mysql_user user="" state=absent
-
-- name: remove the MySQL test database
-  action: mysql_db db=test state=absent
-
-
-# 'localhost' needs to be the last item for idempotency, see
-# http://ansible.cc/docs/modules.html#mysql-user
-- name: Change root user password on first run
-  mysql_user: login_user=root
-              login_password=''
-              name=root
-              password={{ mysql_root_password }}
-              priv=*.*:ALL,GRANT
-              host={{ item }}
+- name: set root password
+  mysql_user:
+    name="root"
+    password="{{ mysql_vars.mysql_root_password }}"
+    priv=*.*:ALL,GRANT
   with_items:
     - "{{ ansible_hostname }}"
     - 127.0.0.1
     - ::1
     - localhost
+  ignore_errors: true
+
+- name: create mysql config file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify:
+  - restart mysql
+
+- name: delete anonymous MySQL server user
+  action:
+    mysql_user
+    login_user=root
+    login_password="{{ mysql_vars.mysql_root_password }}"
+    user=""
+    host="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: remove the MySQL test database
+  action:
+    mysql_db
+    login_user=root
+    login_password="{{ mysql_vars.mysql_root_password }}"
+    db=test
+    state=absent
