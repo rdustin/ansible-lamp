@@ -12,6 +12,6 @@ mysql_vars:
             password: abc123
             state: present
         sampleuser2:
-            priv: sampledb2.*:ALL
+            priv: sampledb2.*:ALL/sampledb.*:SELECT
             password: abc123
             state: present
