@@ -22,12 +22,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # provision the server (Windows Host)
     # we use ansible for provisioning which isn't natively supported
-    # on Windows hosts
-    # set provision script
+    # on Windows hosts so we run a shell script to install ansible on
+    # the server, copy our playbook over and run it from there.
     config.vm.provision :shell, :path => "provisioning/ansible-windows-only.sh"
 
     # provision the server (OSX/Linux)
-    # using ansible
+    # To use this on an OSX or Linux host comment out the line above
+    # that says: config.vm.provision :shell, :path => "provisioning/ansible-windows-only.sh"
+    # and uncomment the three lines below this.
     #config.vm.provision "ansible" do |ansible|
     #   ansible.playbook = "provisioning/playbook.yml"
     #end

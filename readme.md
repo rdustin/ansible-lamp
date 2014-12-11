@@ -1,19 +1,36 @@
-# Basic Lamp setup with configurable vhosts and databases
+# Basic Lamp setup with configurable vhosts and MySQL databases using Ansible
+
+## Introduction
+In order to better learn server provisioning using [Ansible](http://docs.ansible.com/), I decided to build
+a playbook that can be used to create a basic LAMP server on Ubuntu 14.04 and allows for customization of Apache
+virtual hosts and MySQL databases and users. Please report any bugs or suggestions via the issues section of the
+[GitHub Project Page](https://github.com/rdustin/ansible-lamp).
+
+Currently this script has only been tested when running from a Windows machine (host) since that is what I had available
+during development; however, with minor changes in the Vagrant file it should run from any OSX or Linux machine (host) as well.
+See the headings inside the Getting Started section for more information.
 
 ## Getting Started
 You must have Vagrant installed to use this project. If you do not have
 Vagrant installed and set up, please refer to the following resource
 before continuing.
-[https://docs.vagrantup.com/v2/getting-started/index.html]
+https://docs.vagrantup.com/v2/getting-started/index.html.
 
 
 Download or clone this repository from GitHub
 
+### Using this script on a Windows machine
+This should work without any changes if you are running this from a Windows host machine.
+
+### Using this script on an  OSX or Linux machine
+To use this on an OSX or Linux host machine open the Vagrant file included in this project and
+find the comment that says: ```provision the server (OSX/Linux)``` and follow the instructions
+in the comments.
 
 ## Web: Apache and PHP
 *Setting up virtual hosts:*
 You can add as many sites as you want to the server by leveraging Vagrant's
-built in file syncing capabilities. By default two sample sites are included
+built in file syncing capabilities and configuring ansible variables. By default two sample sites are included
 for your reference called sample-site and sample-site2.
 
 __Step 1: Set up your files on your host (local) machine__
@@ -43,7 +60,7 @@ a Windows machine as my local computer I would need to open my
 `"C:\Windows\System32\drivers\etc\hosts"` file and add the following line:
 `192.168.30.117 sample-site.dev sample-site2.dev`
 
-Alternatively, you can install the Vagrant [https://github.com/cogitatio/vagrant-hostsupdater (Hostupdater plugin)]
+Alternatively, you can install the Vagrant [Hostupdater plugin](https://github.com/cogitatio/vagrant-hostsupdater)
 and configure your virtual host definitions in the Vagrantfile.
 
 *Disable a virtual host*
@@ -70,4 +87,40 @@ disabled_modules:
 ```
 
 ## Mysql
-*creating tables and users*
+*Creating databases and users:* You can add as many databases and users as you want to the server
+by configuring ansible variables. By default two databases (sampledb & sampledb2) and users (sampleuser & sampleuser2) are
+included for your reference.
+
+__Adding a Database__: In your editor open the dbservers variable file located at {project-folder-name}/provisioning/playbooks/group_vars/dbservers.
+Under the mysql_vars variable you will see a variable called databases with the two sample database names that looks like the following:
+```
+mysql_vars:
+    databases:
+        - sampledb
+        - sampledb2
+```
+Please change the database names to what you want them to be. You can have as many databases as you would like to have.
+
+__Adding a User__: In your editor open the dbservers variable file located at {project-folder-name}/provisioning/playbooks/group_vars/dbservers.
+Under the mysql_vars variable you will see a variable called users with the two sample users names that looks like the following:
+```
+users:
+    sampleuser:
+        priv: sampledb.*:ALL
+        password: abc123
+        state: present
+    sampleuser2:
+        priv: sampledb2.*:ALL/sampledb.*:SELECT
+        password: abc123
+        state: present
+```
+Please change the user names to what you want them to be. You can have as many users as you would like to have. You have the following
+settings available for each user:
+* __Give database access and set privileges__: You can set which databases the user has access to and which privileges on each database.
+In our example above, sample user only has access to the sampledb database and has all privileges to all tables on that database.
+Sampleuser2, on the other hand, has all privileges and access to sampledb2 but only have select privileges on sampledb. For more examples
+privileges see [this Ansible document](http://docs.ansible.com/mysql_user_module.html#examples).
+
+* __Set user password__: You can set the user's password by changing the value abc123 to whatever value you would like the password to be.
+
+* __Create or Delete user__: If you change state above to absent instead of present it will delete the user.

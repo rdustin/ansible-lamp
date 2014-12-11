@@ -1,0 +1,2 @@
+RewriteEngine On
+Redirect 302 /rewrite-test http://sample-site.dev/blah
