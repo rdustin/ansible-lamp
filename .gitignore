@@ -1,1 +1,3 @@
 .vagrant
+www/sites/phpmyadmin
+phpinfo.php
