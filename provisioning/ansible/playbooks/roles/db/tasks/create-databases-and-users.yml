@@ -5,7 +5,7 @@
     login_password="{{ mysql_vars.mysql_root_password }}"
     name="{{ item }}"
     state=present
-  with_items: mysql_vars.databases
+  with_items: "{{mysql_vars.databases}}"
 
 - name: add users to databases
   mysql_user:
@@ -15,4 +15,4 @@
     password="{{ item.value.password }}"
     priv={{ item.value.priv }}
     state={{ item.value.state | default('present') }}
-  with_dict: mysql_vars.users
+  with_dict: "{{mysql_vars.users}}"
