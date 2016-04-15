@@ -2,6 +2,9 @@
 - name: apply common configuration to all nodes
   hosts: all
   remote_user: root
+  become: yes
+  become_user: root
+  become_method: sudo
 
   roles:
     - common
@@ -9,6 +12,9 @@
 - name: configure webserver
   hosts: webservers
   remote_user: root
+  become: yes
+  become_user: root
+  become_method: sudo
 
   roles:
     - web
@@ -16,6 +22,9 @@
 - name: configure dbserver
   hosts: dbservers
   remote_user: root
+  become: yes
+  become_user: root
+  become_method: sudo
 
   roles:
     - db
