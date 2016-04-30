@@ -30,7 +30,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # To use this on an OSX or Linux host comment out the line above
     # that says: config.vm.provision :shell, :path => "provisioning/ansible-windows-only.sh"
     # and uncomment the three lines below this.
-    #config.vm.provision "ansible" do |ansible|
-    #   ansible.playbook = "provisioning/playbook.yml"
-    #end
+    # config.vm.provision "ansible" do |ansible|
+    #   ansible.playbook = "provisioning/ansible/playbooks/playbook.yml"
+    #   ansible.groups = {
+    #       "webservers" => ["default"],
+    #       "dbservers" => ["default"],
+    #   }
+    # end
 end
